@@ -2,7 +2,7 @@
 #docker run --name postgres13 -p 5432:5432 -e PG_USER=root -e PG_PASSWORD=mypassword -d postgres:latest
 
 postgres:
-	psql "dbname=simple_bank host=localhost user=${PSQLUSER} password=${PSQLPASS} port=5432 sslmode=disable"
+	docker run --name postgres -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=mypassword -d postgres:latest
 
 
 createdb:
