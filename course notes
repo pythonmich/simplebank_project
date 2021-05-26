@@ -1,0 +1,54 @@
+database transactions
+: its is a single unit of work
+: it often made up of multiple db operations
+eg.
+    Transfer of 10 usd from bank account 1 to bank account 2
+    1. Create a transfer record with amount = 10
+    2. Create an account entry for account 1 with amount = -10
+    3. Create an account entry for account 2 with amount = +10
+    4. Subtract 10 from the balance of account 1
+    5. Add 10 to the balance of account 2
+
+Uses:
+    1. To Provide and consistent unit of work even in case of system failure
+    2. To provide isolation btwn programs that access the db concurrently
+
+For these to be achieved our db must achieve ACID properties
+Atomicity (A) -> Either all operations complete successfully or the transaction fails and the db is unchanged
+Consistency (C) -> The db state must be valid after the transaction. All constraints must be satisfied
+Isolation (I) -> Concurrent transactions must not affect each other
+Durability (D) -> All Data written by a successfully transaction must be recorded in persistent storage
+
+
+How To Run a Sql Tx?
+    BEGIN;
+    ....
+    COMMIT;
+    if successful we commit the changes or transactions
+
+    BEGIN;
+    -....
+    ROLLBACK;
+    if an error or failure occurs we rollback and is left unchanged
+
+Test Driven Development
+    -> the idea is to write test first to make our current code breaks then we gradually improve the test till the test is passed
+
+Isolation:
+    Read Phenomena:
+        1. Dirty Read ->it happens when a transaction reads data from other concurrent operations written that has not be committed yet
+                        this may affect validity of our data
+        2. Non-repeatable Read -> it happens when a transaction reads the same row twice and sees different values because it has
+                                been modified by other committed transactions.
+        3. Phantom Read -> A transaction re-executes a query to find rows that satisfy a condition and sees a different set of rows
+                           due to changes by other committed transactions.
+        4. Serialization Anomaly -> its when the result of a group of concurrent committed transactions is impossible to
+                           achieve if we try to run them sequentially in any order without overlapping
+
+4 Standard Isolation Levels
+level 1 Read Uncommitted -> can see data written by uncommitted transaction
+level 2 Read Committed -> only see data written by committed transaction
+level 3 Repeatable Read -> Same read query always returns the same result
+level 4 Serializable -> Can achieve the same result if execute transactions serially in same order instead of concurrently
+
+
