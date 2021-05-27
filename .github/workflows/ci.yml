@@ -2,9 +2,9 @@ name: ci-test
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
 
@@ -36,6 +36,9 @@ jobs:
         with:
           go-version: 1.16
         id: go
+
+      -name: Run Migrations
+        run: make migrateUp
 
       - name: Check out code into the Go mudule directory
         uses: actions/checkout@v2
