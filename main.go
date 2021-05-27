@@ -3,25 +3,24 @@ package main
 import (
 	"GoBankProject/api"
 	db "GoBankProject/db/sqlc"
+	"GoBankProject/util"
 	"database/sql"
 	_ "github.com/lib/pq"
 	"log"
 )
 // TODO: Refactor code to load all conf from env variables or conf file
-const (
-	dbDriver = "postgres"
-	dbSource = "postgresql://python_mich:Musyimi7.@localhost:5432/simple_bank?sslmode=disable"
-	severAddress = "0.0.0.0:5050"
-)
 
 func main() {
-	conn, err := sql.Open(dbDriver, dbSource);if err != nil {
+	config, err := util.LoadConfig("../GoBankProject"); if err != nil{
+		log.Fatal("cannot load configurations", err)
+	}
+	conn, err := sql.Open(config.DBDriver, config.DBSource);if err != nil {
 		log.Fatal("cannot connect to db", err)
 	}
 	store := db.NewStore(conn)
 	sever := api.NewServer(store)
 
-	err = sever.Run(severAddress); if err != nil{
+	err = sever.Run(config.ServerAddress); if err != nil{
 		log.Fatal("cannot start server", err)
 	}
 }
