@@ -10,7 +10,7 @@ import (
 
 const (
 	dbDriver = "postgres"
-	dbSource = "postgresql://python_mich:Musyimi7.@localhost:5432/simple_bank?sslmode=disable"
+	dbSource = "postgresql://root:mypassword@localhost:5432/simple_bank?sslmode=disable"
 )
 var testQueries *Queries
 var testDB *sql.DB
