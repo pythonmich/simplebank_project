@@ -22,7 +22,7 @@ type CreateAccountParams struct {
 }
 
 
-func (q *Queries) CreatedAccount(ctx context.Context, arg CreateAccountParams)(Account, error) {
+func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams)(Account, error) {
 	row := q.db.QueryRowContext(ctx, createAccount, arg.Owner,arg.Balance, arg.Currency)
 	var account Account
 	err := row.Scan(
@@ -92,7 +92,7 @@ func (q *Queries) ListAccounts(ctx context.Context, arg ListAccountParams) ([]Ac
 		err = r.Close()
 	}(rows)
 
-	var details []Account
+	var listAccounts = []Account{}
 	for rows.Next(){
 		var account Account
 		if err := rows.Scan(
@@ -104,12 +104,12 @@ func (q *Queries) ListAccounts(ctx context.Context, arg ListAccountParams) ([]Ac
 		); err != nil{
 			return nil, err
 		}
-		details = append(details, account)
+		listAccounts = append(listAccounts, account)
 	}
 	if err := rows.Close(); err != nil{
 		return nil, err
 	}
-	return details, err
+	return listAccounts, err
 }
 
 const updateAccount = `-- name: UpdateAccount :one

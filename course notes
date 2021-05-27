@@ -52,3 +52,4 @@ level 3 Repeatable Read -> Same read query always returns the same result
 level 4 Serializable -> Can achieve the same result if execute transactions serially in same order instead of concurrently
 
 
+
