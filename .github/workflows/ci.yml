@@ -40,7 +40,7 @@ jobs:
       - name: Check out code into the Go mudule directory
         uses: actions/checkout@v2
 
-      -name: Run migrations
+      - name: Run migrations
         run: make migrateUp
 
         #      - name: Build
