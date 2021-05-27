@@ -16,11 +16,11 @@ sqlc:
 
 
 migrateDown:
-	migrate -path db/migration -database "postgresql://${PSQLUSER}:${PSQLPASS}@localhost:5432/simple_bank?sslmode=disable" -verbose down
+	migrate -path db/migration -database "postgresql://root:mypassword@localhost:5432/simple_bank?sslmode=disable" -verbose down
 
 
 migrateUp:
-	migrate -path db/migration -database "postgresql://${PSQLUSER}:${PSQLPASS}@localhost:5432/simple_bank?sslmode=disable" -verbose up
+	migrate -path db/migration -database "postgresql://root:mypassword@localhost:5432/simple_bank?sslmode=disable" -verbose up
 
 test:
 	go test -v -cover ./...
